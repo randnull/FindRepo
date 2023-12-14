@@ -4,10 +4,9 @@ import toml
 
 from typing import List
 
-def find_github_code(code: str, count: int) -> List[str]:
+def find_github_code(code: str, count: int = 5) -> List[str]:
     if count <= 0:
-        count = 1
-        raise RuntimeWarning('Count less than zero!')
+        raise RuntimeError('Count less than zero!')
 
     config = toml.load('authorization.toml')
     token = config['token_github']['token']
@@ -17,7 +16,6 @@ def find_github_code(code: str, count: int) -> List[str]:
     }
 
     url_with_code = f'https://api.github.com/search/code?q={code}'
-
     response = requests.get(url_with_code, headers=headers)
     response_json = response.json()['items']
 
