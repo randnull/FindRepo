@@ -53,7 +53,12 @@ def main():
     file_name = file_name.split('.')[0]
 
     code = filter_code(file.read())
-    count = int(client_args.max_count)
+    count = client_args.max_count
+
+    if not count.isdigit():
+        raise RuntimeError('Count must be int!')
+    
+    count = int(count)
     
     code_for_checking = sep_to_func(code)
     
