@@ -17,7 +17,10 @@ def find_github_code(code: str, count: int = 5) -> List[str]:
 
     url_with_code = f'https://api.github.com/search/code?q={code}'
     response = requests.get(url_with_code, headers=headers)
-    response_json = response.json()['items']
+    try:
+        response_json = response.json()['items']
+    except:
+        return []
 
     answer_list = list()
 

@@ -1,6 +1,9 @@
 import argparse
 import os
 
+import ast
+import astunparse
+
 from FindRepo.github.github import find_github_code
 from FindRepo.gitlab.gitlab import find_gitlab_code
 
@@ -8,13 +11,29 @@ from FindRepo.gitlab.gitlab import find_gitlab_code
 forbidden_char = ['"', '@']
 
 
+def sep_to_func(code: str):
+    tree = ast.parse(code)
+
+    parts = []
+
+    for node in ast.walk(tree):
+        if isinstance(node, ast.FunctionDef):
+            parts.append(astunparse.unparse(node).strip())
+    
+    tree.body = [node for node in tree.body if not isinstance(node, ast.FunctionDef)]
+
+    parts.append(astunparse.unparse(tree).strip())
+
+    return parts
+
+
 def filter_code(code: str) -> str:
     for ch in forbidden_char:
-        code = code.replace(ch, '')
+        code = code.replace(ch, ' ')
     return code
 
 
-if __name__ == "__main__":
+def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '-file',
@@ -35,12 +54,20 @@ if __name__ == "__main__":
 
     code = filter_code(file.read())
     count = int(client_args.max_count)
+    
+    code_for_checking = sep_to_func(code)
+    
+    result_github = []
 
-    result_github = find_github_code(code, count)
-    result_gitlab = find_gitlab_code(file_name, count)
+    for part in code_for_checking:
+        result = find_github_code(part, 1)
+        
+        if result != []:
+            result_github.append(*result)
 
     print('github result: ', end="")
     print(*result_github)
-    
-    print('gitlab result: ', end="")
-    print(*result_gitlab)
+
+
+if __name__ == "__main__":
+    main()
