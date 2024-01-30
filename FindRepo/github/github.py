@@ -9,7 +9,6 @@ from typing import List
 
 @functools.lru_cache(maxsize=10000)
 def find_github_code(code: str, count: int = 5) -> List[str]:
-    print('cahca')
     if count <= 0:
         raise RuntimeError('Count less than zero!')
 
