@@ -6,10 +6,11 @@ import astunparse
 from typing import List
 
 class Split:
-    def __init__(self):
+    def __init__(self, fast=False):
         self.hash_class = Hash()
+        self.fast = fast
 
-    def split_code(self, code: str) -> List:
+    def _split_python_code(self, code: str) -> List:
         tree = ast.parse(code)
 
         parts = []
@@ -25,6 +26,71 @@ class Split:
         hash_list = list()
 
         for part in parts:
-            hash_list.append((part, self.hash_class.hash_object(part)))
+            normal_part = part.replace('\n', '')
 
+            if normal_part == '':
+                continue
+
+            hash_list.append((normal_part, self.hash_class.hash_object(part)))
+
+        return hash_list
+
+
+    def _split_cpp_code(self, code: str) -> List:
+        #Not implement
+        return []
+
+
+    def _split_another_code(self, code: str) -> List:
+        splited_code: List = code.split('\n')
+        
+        words: List = list()
+
+        for word in splited_code:
+            if word != '':
+                words.append(word)
+
+        hash_list: List = list()
+
+        for i in range(0, len(words), 3):
+            part = ' '.join(words[i:i+3])
+
+            normal_part = part.replace('\n', '')
+
+            normal_part = normal_part.strip()
+
+            if normal_part == '':
+                continue
+
+            hash_list.append((normal_part, self.hash_class.hash_object(part)))
+        
+        return hash_list
+
+
+    def split_code(self, code: str, code_lang: str) -> List:
+        if code_lang == 'py':
+            return self._split_python_code(code)
+        if code_lang == 'cpp':
+            return self._split_cpp_code(code)
+        else:
+            return self._split_another_code(code)
+
+    
+    def split_text(self, text: str) -> List:
+        splited_text: List = text.split('.')
+        
+        hash_list: List = list()
+
+        for i in range(0, len(splited_text)):
+            part = splited_text[i]
+
+            normal_part = part.replace('\n', '')
+
+            normal_part = normal_part.strip()
+
+            if normal_part == '':
+                continue
+
+            hash_list.append((normal_part, self.hash_class.hash_object(part)))
+        
         return hash_list

@@ -9,14 +9,16 @@ def find(text: str, is_code=True):
     if is_code:
         search_functions.append(('github', find_github))
 
-    dict_links = dict()
+    # dict_links = dict()
+    answer_list = list()
 
     for function in search_functions:
         results = function[1](text)
+        answer_list += results
+        # for link in dict_links:
+        #     dict_links[link] = dict_links.get(link, 0) + 1
 
-        dict_links[function[0]] = results
-
-    return dict_links
+    return answer_list
 
 
         
