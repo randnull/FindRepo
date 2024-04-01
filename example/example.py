@@ -1,20 +1,7 @@
-from typing import Set, Union
+def func1():
+    return 14
 
-from fastapi import FastAPI
-from pydantic import BaseModel
+def func2(x: int):
+    return x - 5
 
-app = FastAPI()
-
-
-class Item(BaseModel):
-    name: str
-    description: Union[str, None] = None
-    price: float
-    tax: Union[float, None] = None
-    tags: Set[str] = set()
-
-
-@app.post("/items/", response_model=Item, tags=["items"])
-def create_item(item: Item):
-    return item
-
+print(func1() + func2(4))
