@@ -1,6 +1,10 @@
 import os
 
 
+def read_ipynb():
+    pass
+
+
 def read_file(path: str):
     file = open(path, 'r')
 
