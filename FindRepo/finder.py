@@ -1,16 +1,12 @@
 from argpars.parser import parser
-from reader.reader import read_file
+from reader.reader import Reader
 from search.search import find
 from split.split import Split
 
-def main():
-    args = parser.parse_args()
-    
-    if args.file is None:
-        print('Не указан файл')
-        return
+def finder(link: str):   
+    reader = Reader()
 
-    text, ftype = read_file(args.file)
+    text, ftype = reader.read(link) #List[text, ftype]
     
     is_code = ftype in ['py']
 
@@ -28,7 +24,9 @@ def main():
 
     for i in range(len(splited_text)):
         print(f'Поиск по {i} части')
+        # поиск по БД 
         result = find(splited_text[i][0], is_code=is_code)
+        #добавление в БД
         
         for key in result:
             dict_link[key] = dict_link.get(key, 0) + 1
@@ -36,6 +34,11 @@ def main():
     for link in dict(sorted(dict_link.items(), key=lambda item: -item[1])):
         print(f'Результат: {link}. Количество совпадений: {dict_link[link]}')
     
+
+def main():
+    link = input()
+    finder(link)
+
 
 if __name__ == "__main__":
     main()
