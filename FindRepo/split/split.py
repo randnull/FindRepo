@@ -6,8 +6,8 @@ import astunparse
 from typing import List
 
 class Split:
-    def __init__(self, fast=False):
-        self.hash_class = Hash()
+    def __init__(self, hash_func: str, fast: bool = False):
+        self.hash_class = Hash(hash_func)
         self.fast = fast
 
     def _split_python_code(self, code: str) -> List:
@@ -67,7 +67,7 @@ class Split:
         return hash_list
 
 
-    def split_code(self, code: str, code_lang: str) -> List:
+    def _split_code(self, code: str, code_lang: str) -> List:
         if code_lang == 'py':
             return self._split_python_code(code)
         if code_lang == 'cpp':
@@ -76,7 +76,7 @@ class Split:
             return self._split_another_code(code)
 
     
-    def split_text(self, text: str) -> List:
+    def _split_text(self, text: str) -> List:
         splited_text: List = text.split('.')
         
         hash_list: List = list()
@@ -94,3 +94,9 @@ class Split:
             hash_list.append((normal_part, self.hash_class.hash_object(part)))
         
         return hash_list
+
+
+    def split(self, object: str, ftype: str, is_code: bool) -> List:
+        if is_code:
+            return self._split_code(object, ftype)
+        return self._split_text(object)

@@ -3,20 +3,28 @@ from search.google.google import find_google
 from search.yandex.yandex import find_yandex
 
 
-def find(text: str, is_code=True):
-    search_functions = [('google', find_google)]
+class Searcher:
+    def __init__(self):
+        pass
 
-    if is_code:
-        search_functions.append(('github', find_github))
+    def _check_hash(self, hash: str):
+        pass
 
-    answer_list = list()
+    def _find_serp(self, object: str):
+        pass
+        # search_functions = [('google', find_google)]
 
-    for function in search_functions:
-        results = function[1](text)
-        answer_list += results
+        # if is_code:
+        #     search_functions.append(('github', find_github))
+
+        # answer_list = list()
+
+        # for function in search_functions:
+        #     results = function[1](text)
+        #     answer_list += results
 
 
-    return list(set(answer_list))
+        # return list(set(answer_list))
 
-
-        
+    def find(self, text: str, is_code=True):
+        pass
