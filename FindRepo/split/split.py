@@ -10,6 +10,7 @@ class Split:
         self.hash_class = Hash(hash_func)
         self.fast = fast
 
+
     def _split_python_code(self, code: str) -> List:
         tree = ast.parse(code)
 
@@ -96,7 +97,7 @@ class Split:
         return hash_list
 
 
-    def split(self, object: str, ftype: str, is_code: bool) -> List:
+    def split(self, find_object: str, ftype: str, is_code: bool) -> List:
         if is_code:
-            return self._split_code(object, ftype)
-        return self._split_text(object)
+            return self._split_code(find_object, ftype)
+        return self._split_text(find_object)

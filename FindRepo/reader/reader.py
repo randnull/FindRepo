@@ -14,9 +14,12 @@ class Reader:
 
 
     def _check_file_type(self, path: str) -> str:
-        _, file_name = os.path.split(path)
-        file_type = file_name.split('.')[1]
-
+        try:
+            _, file_name = os.path.split(path)
+            file_type = file_name.split('.')[1]
+        except:
+            return "None"
+            
         return file_type
 
 
@@ -69,4 +72,4 @@ class Reader:
         if os.path.isdir(path):
             return self._read_direct(path)
         else:
-            return self._read_file(path)
+            return [self._read_file(path)]

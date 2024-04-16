@@ -4,13 +4,13 @@ import functools
 
 
 @functools.lru_cache(maxsize=10000)
-def google_request(object: str, site: str):
+def google_request(object_body: str, site: str):
     results_set = set()
 
     url = "http://127.0.0.1:6500/google/search"
 
     params = {
-        "text": object,
+        "text": object_body,
         "limit": 10,
     }
 
@@ -29,17 +29,14 @@ def google_request(object: str, site: str):
 
 
 @functools.lru_cache(maxsize=10000)
-def find_google(object: str, is_code=True) -> List[str]:
+def find_google(object_body: str, is_code=True) -> List[str]:
     print('Поиск: google')
     results_set = set()
 
     sites: List = ['']
 
-    # if is_code:
-    #     sites = ['', 'pastebin.com', 'gitlab.com', 'github.com']
-
     for site in sites:
-        results_set = results_set.union(google_request(object=object, site=site))
+        results_set = results_set.union(google_request(object_body=object_body, site=site))
 
     if len(results_set) != 0:
         print('Google: Найдено!')
