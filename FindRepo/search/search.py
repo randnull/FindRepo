@@ -2,7 +2,7 @@ from typing import List
 
 from search.github.github import find_github
 from search.google.google import find_google
-from search.yandex.yandex import find_yandex
+# from search.yandex.yandex import find_yandex
 
 
 class Searcher:
@@ -14,7 +14,7 @@ class Searcher:
         #     self.search_functions.append(('github', find_github))
 
 
-    def _check_hash(self, hash: str) -> (List, bool): #в БД реп
+    def _check_hash(self, hash: str): #в БД реп
         return [], False
 
 
@@ -28,9 +28,9 @@ class Searcher:
                 links.add(link)
 
         return list(links)
-        
 
-    def find(self, find_object: str):
+
+    def find(self, find_object: str) -> List:
         body: str = find_object[0]
         body_hash: str = find_object[1]
 

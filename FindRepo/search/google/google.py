@@ -2,22 +2,26 @@ from typing import List
 import requests
 import functools
 
+from colorama import init
+init()
+from colorama import Fore, Back, Style
+
 
 @functools.lru_cache(maxsize=10000)
-def google_request(object_body: str, site: str):
+def google_request(object_body: str):
     results_set = set()
 
     url = "http://127.0.0.1:6500/google/search"
 
     params = {
-        "text": object_body,
+        "text": object_body[:31],
         "limit": 10,
     }
 
-    if site != '':
-        params["site"] = site 
-
-    response = requests.get(url, params=params)
+    try:
+        response = requests.get(url, params=params)
+    except:
+        return set()
 
     if response.status_code == 200:
         data = response.json()
@@ -30,15 +34,11 @@ def google_request(object_body: str, site: str):
 
 @functools.lru_cache(maxsize=10000)
 def find_google(object_body: str, is_code=True) -> List[str]:
-    print('Поиск: google')
     results_set = set()
 
-    sites: List = ['']
+    results_set = google_request(object_body=object_body)
 
-    for site in sites:
-        results_set = results_set.union(google_request(object_body=object_body, site=site))
-
-    if len(results_set) != 0:
-        print('Google: Найдено!')
+    #if len(results_set) != 0:
+        #print(Fore.GREEN + 'Google: Найдено!' + Style.RESET_ALL)
 
     return list(results_set)

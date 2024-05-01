@@ -15,3 +15,6 @@ class Hash:
         hex_hash = hash_object.hexdigest()
 
         return hex_hash
+
+#деление ast для python
+#для других форматов - strip
