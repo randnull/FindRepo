@@ -1,3 +1,11 @@
 requests==2.31.0
 toml==0.10.2
 astunparse==1.6.3
+astunparse==1.6.3
+async-timeout==4.0.3
+SQLAlchemy==2.0.29
+typing_extensions==4.11.0
+urllib3==2.2.1
+postgres==4.0
+psycopg2-binary==2.9.9
+psycopg2-pool==1.2

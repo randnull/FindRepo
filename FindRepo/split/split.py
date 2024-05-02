@@ -3,12 +3,7 @@ from hash.hash import Hash
 import ast
 import astunparse
 
-from colorama import init
-init()
-from colorama import Fore, Back, Style
-
 from typing import List
-
 
 class Split:
     def __init__(self, hash_func: str, fast: bool = False):
@@ -17,30 +12,22 @@ class Split:
 
 
     def _split_python_code(self, code: str) -> List:
-        '''
-        Разделяет код на функции (def) и весь остальной код
-
-        :param code: код на python в формате str
-
-        :return: list с структурой (часть кода, хэш части кода)
-        '''
-
         tree = ast.parse(code)
 
-        parts: List = []
+        parts = []
 
         for node in ast.walk(tree):
-            if isinstance(node, ast.FunctionDef) or isinstance(node, ast.AsyncFunctionDef):
+            if isinstance(node, ast.FunctionDef):
                 parts.append(astunparse.unparse(node).strip())
         
-        tree.body: List = [node for node in tree.body if not (isinstance(node, ast.FunctionDef) or isinstance(node, ast.AsyncFunctionDef))]
+        tree.body = [node for node in tree.body if not isinstance(node, ast.FunctionDef)]
 
         parts.append(astunparse.unparse(tree).strip())
 
-        hash_list: List = list()
+        hash_list = list()
 
         for part in parts:
-            normal_part: str = part.replace('\n', '')
+            normal_part = part.replace('\n', '')
 
             if normal_part == '':
                 continue
@@ -56,14 +43,6 @@ class Split:
 
 
     def _split_another_code(self, code: str) -> List:
-        '''
-        Разделяет код по 5 строк
-
-        :param code: код в формате str
-
-        :return: list с структурой (часть кода, хэш части кода)
-        '''
-
         splited_code: List = code.split('\n')
         
         words: List = list()
@@ -74,8 +53,8 @@ class Split:
 
         hash_list: List = list()
 
-        for i in range(0, len(words), 5):
-            part = ' '.join(words[i:i+5])
+        for i in range(0, len(words), 3):
+            part = ' '.join(words[i:i+3])
 
             normal_part = part.replace('\n', '')
 
@@ -90,15 +69,6 @@ class Split:
 
 
     def _split_code(self, code: str, code_lang: str) -> List:
-        '''
-        Разделяет код на части
-
-        :param code: код в формате str
-        :param code_lang: язык программирования
-
-        :return: list с структурой (часть код, хэш части кода)
-        '''
-
         if code_lang == 'py':
             return self._split_python_code(code)
         if code_lang == 'cpp':
@@ -108,14 +78,6 @@ class Split:
 
     
     def _split_text(self, text: str) -> List:
-        '''
-        Разделяет текст на части
-
-        :param text: текст в формате str
-
-        :return: list с структурой (часть текста, хэш части текста)
-        '''
-
         splited_text: List = text.split('.')
         
         hash_list: List = list()
@@ -136,16 +98,6 @@ class Split:
 
 
     def split(self, find_object: str, ftype: str, is_code: bool) -> List:
-        '''
-        Разделяет текст на части
-
-        :param find_object: объект в формате str
-        :param ftype: тип файла
-        :param is_code: является ли объект кодом
-
-        :return: list с структурой (часть объекта, хэш части объекта)
-        '''
-
         if is_code:
             return self._split_code(find_object, ftype)
         return self._split_text(find_object)

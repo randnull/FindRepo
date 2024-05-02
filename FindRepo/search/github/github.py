@@ -16,8 +16,9 @@ def filter_code(code: str) -> str:
     return code
 
 
-@functools.lru_cache(maxsize=10000)
 def find_github(code: str) -> List[str]:
+    print('Поиск: Github')
+    
     config = toml.load('authorization.toml')
     token = config['token_github']['token']
 
@@ -28,11 +29,7 @@ def find_github(code: str) -> List[str]:
     code_to_request = filter_code(code)
 
     url_with_code = f'https://api.github.com/search/code?q={code_to_request}'
-    
-    try:
-        response = requests.get(url_with_code, headers=headers)
-    except:
-        return list()
+    response = requests.get(url_with_code, headers=headers)
 
     try:
         response_json = response.json()['items']

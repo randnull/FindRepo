@@ -5,21 +5,17 @@ from tqdm import tqdm
 from reader.reader import Reader
 from search.search import Searcher
 from split.split import Split
-
 from colorama import init
 init()
 from colorama import Fore, Style
-
 from errors.errors import *
-
 from typing import List, Dict
-
 from whitelist.whitelist import get_whitelist
 
 
 def finder(link: str, fast: bool):
     CODE_TYPES: List = get_whitelist()
-    
+
     reader: Reader = Reader(types=CODE_TYPES)
 
     try:
@@ -49,7 +45,7 @@ def finder(link: str, fast: bool):
 
     for link in dict(sorted(links_dict.items(), key=lambda item: -item[1])):
         print(Fore.GREEN + f'Результат: {link}. Количество совпадений: {links_dict[link]}' + Style.RESET_ALL)
-
+    
 
 def main():
     link = input()

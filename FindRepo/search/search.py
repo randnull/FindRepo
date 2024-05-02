@@ -2,7 +2,8 @@ from typing import List
 
 from search.github.github import find_github
 from search.google.google import find_google
-# from search.yandex.yandex import find_yandex
+#from search.yandex.yandex import find_yandex
+from .repository.repository import AbstractRepository, Table
 
 
 class Searcher:
@@ -14,8 +15,14 @@ class Searcher:
         #     self.search_functions.append(('github', find_github))
 
 
-    def _check_hash(self, hash: str): #в БД реп
-        return [], False
+    def _check_hash(self, hash: str) -> (List, bool): #в БД реп
+        abstract_repository = AbstractRepository(Table)
+        result = abstract_repository.get_by_hash(hash)
+        if result:
+            return result.links, True
+        else:
+            abstract_repository.add(Table(hash=hash, links=[]))
+            return [], False
 
 
     def _find_serp(self, find_body: str) -> List:
@@ -28,9 +35,9 @@ class Searcher:
                 links.add(link)
 
         return list(links)
+        
 
-
-    def find(self, find_object: str) -> List:
+    def find(self, find_object: str):
         body: str = find_object[0]
         body_hash: str = find_object[1]
 
@@ -39,6 +46,7 @@ class Searcher:
         if is_find:
             return db_result
         
-        links: List = self._find_serp(body)
+        # links: List = self._find_serp(body)
+        links: List = []
 
         return links

@@ -10,17 +10,15 @@
 
     <changeSet author="k.goryunov" id="create-hash-table">
         <createTable tableName="hash-table">
+            <column autoIncrement="true" name="id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="hash_pkey"/>
+            </column>
+
             <column name="hash" type="VARCHAR">
                 <constraints nullable="false"/>
             </column>
 
-            <column name="first_result" type="VARCHAR">
-            </column>
-
-            <column name="second_result" type="VARCHAR">
-            </column>
-
-            <column name="third_result" type="VARCHAR">
+            <column name="links" type="VARCHAR []">
             </column>
         </createTable>
     </changeSet>

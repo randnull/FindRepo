@@ -1,0 +1,14 @@
+{
+    "Servers": {
+        "1": {
+            "Name": "HashDataBase",
+            "Group": "Servers",
+            "Port": 5432,
+            "Username": "admin",
+            "Host": "postgres-container",
+            "SSLMode": "disable",
+            "MaintenanceDB": "hash_data",
+            "PassFile": "/var/lib/pgadmin/pgpass"
+        }
+    }
+}
