@@ -19,10 +19,6 @@ class Reader:
             self.types = types
 
 
-    def _check_cache_files(self, path: str) -> bool:
-        pass
-
-
     def _check_file_type(self, path: str) -> str | None:
         '''
         Определяет формат файла по пути до него

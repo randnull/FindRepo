@@ -19,6 +19,14 @@ class Searcher:
 
 
     def _find_serp(self, find_body: str) -> List:
+        '''
+        Поиск по части кода в доступных сторонних источниках
+
+        :param find_body: объект, по которому нужно выполнить поиск
+
+        :return: list с найденными результатами (ссылками)
+        '''
+
         links = set()
 
         for function in self.search_functions:
@@ -31,6 +39,14 @@ class Searcher:
 
 
     def find(self, find_object: str) -> List:
+        '''
+        Поиск по части кода в доступных источниках (БД или сторонние ресурсы)
+
+        :param find_object: объект, по которому нужно выполнить поиск
+
+        :return: list с найденными результатами (ссылками)
+        '''
+
         body: str = find_object[0]
         body_hash: str = find_object[1]
 
