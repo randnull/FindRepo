@@ -6,6 +6,13 @@ class FormatterPerRequest:
         pass
 
 
+    @staticmethod
+    def _delete_forbidden_char(raw_object: str, forbidden_char: List) -> str:
+        for ch in forbidden_char:
+            raw_object = raw_object.replace(ch, '')
+        return raw_object
+
+
     def _delete_whitespaces(self, raw_object: str) -> str:
         lines: List = raw_object.split('\n')
 

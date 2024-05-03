@@ -24,7 +24,7 @@ def find_github(code: str) -> List[str]:
     headers = {
         'Authorization': token
     }
-
+    # forbidden_char = ['"', '@']
     code_to_request = filter_code(code)
 
     url_with_code = f'https://api.github.com/search/code?q={code_to_request}'
