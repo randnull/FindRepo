@@ -7,7 +7,7 @@ from colorama import Fore, Style
 
 from typing import List
 
-from errors.errors import ErrorBadPath
+from common.errors.errors import ErrorBadPath
 
 
 class Reader:
@@ -128,5 +128,7 @@ class Reader:
             return self._read_direct(path)
         elif os.path.isfile(path):
             print(Fore.GREEN + f'Добавлено: {path}' + Style.RESET_ALL)
+
             return [(self._read_file(path))]
+
         raise ErrorBadPath

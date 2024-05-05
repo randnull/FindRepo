@@ -28,7 +28,7 @@ def find_github(code: str) -> List[str]:
     code_to_request = filter_code(code)
 
     url_with_code = f'https://api.github.com/search/code?q={code_to_request}'
-    
+
     try:
         response = requests.get(url_with_code, headers=headers)
     except:

@@ -21,6 +21,7 @@ def google_request(object_body: str):
     try:
         response = requests.get(url, params=params)
     except:
+        # print(Fore.RED + 'Google не доступен!' + Style.RESET_ALL)
         return set()
 
     if response.status_code == 200:

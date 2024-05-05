@@ -1,4 +1,4 @@
-from hash.hash import Hash
+from common.hash.hash import Hash
 
 import ast
 import astunparse
@@ -75,7 +75,7 @@ class Split:
         hash_list: List = list()
 
         for i in range(0, len(words), 5):
-            part = ' '.join(words[i:i+5])
+            part = ' '.join(words[i:i+5]) #проверить
 
             normal_part = part.replace('\n', '')
 

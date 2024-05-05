@@ -1,7 +1,7 @@
 from typing import List
 
-from search.github.github import find_github
-from search.google.google import find_google
+from global_search.search.github.github import find_github
+from global_search.search.google.google import find_google
 # from search.yandex.yandex import find_yandex
 
 
