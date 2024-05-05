@@ -22,10 +22,6 @@ class Reader:
     def _check_file_type(self, path: str) -> str | None:
         '''
         Определяет формат файла по пути до него
-
-        :param path: путь к файлу в формате str
-
-        :return: расширение файла (.py, .cpp, ...) или None
         '''
 
         try:
@@ -43,10 +39,6 @@ class Reader:
     def _parse_ipynb(self, file: str) -> str:
         '''
         Выделяет из .ipynb только часть с кодом, пропуская все другие элементы
-
-        :param file: Изначальный текст .ipynb
-
-        :return: часть с кодом в формате str
         '''
 
         file_text: str = ""
@@ -63,10 +55,6 @@ class Reader:
     def _read_file(self, path: str):
         '''
         Считывает файл по пути
-
-        :param path: путь к файлу в формате str
-
-        :return: текст файла и тип файла
         '''
 
         try:
@@ -90,10 +78,6 @@ class Reader:
     def _read_direct(self, path: str) -> List:
         '''
         Считывает все файлы в директории по пути
-
-        :param path: путь к директории в формате str
-
-        :return: list с считанными результатами по каждому файлу
         '''
 
         files_texts: List = list()
@@ -118,10 +102,6 @@ class Reader:
     def read(self, path: str) -> List:
         '''
         Считывает все файлы по пути
-
-        :param path: путь к объекту в формате str
-
-        :return: list с считанными результатами по каждому файлу
         '''
 
         if os.path.isdir(path):
