@@ -26,7 +26,7 @@ def local_finder(link: str):
     split_class: TokenSplit = TokenSplit(hash_func='md5')
     search_class: LocalSearch = LocalSearch()
 
-    # links_dict: Dict = dict()
+    links_dict: Dict = dict()
 
     for file, _ in tqdm(files, desc='Поиск совпадений'):
         try:
@@ -34,4 +34,9 @@ def local_finder(link: str):
         except ErrorNotTokenize:
             continue
 
-        result: List = search_class.find(splitted_current_code)
+        find_links: List = search_class.find(splitted_current_code)
+
+        for link in find_links:
+            links_dict[link] = links_dict.get(link, 0) + 1
+
+    

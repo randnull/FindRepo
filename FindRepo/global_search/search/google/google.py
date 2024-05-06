@@ -11,7 +11,7 @@ from colorama import Fore, Back, Style
 def google_request(object_body: str):
     results_set = set()
 
-    url = "http://127.0.0.1:6500/google/search"
+    url = "http://127.0.0.1:7000/google/search"
 
     params = {
         "text": object_body[:31],

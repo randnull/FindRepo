@@ -4,3 +4,11 @@ class ErrorBadPath(Exception):
 
 class ErrorNotTokenize(Exception):
     pass
+
+
+class ErrorEmptyFile(Exception):
+    pass
+
+
+class ErrorEmtpyType(Exception):
+    pass

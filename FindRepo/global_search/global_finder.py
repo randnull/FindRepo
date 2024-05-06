@@ -47,5 +47,7 @@ def global_finder(link: str, fast: bool):
         for link in links:
             links_dict[link] = links_dict.get(link, 0) + 1
 
-    for link in dict(sorted(links_dict.items(), key=lambda item: -item[1])):
-        print(Fore.GREEN + f'Результат: {link}. Количество совпадений: {links_dict[link]}' + Style.RESET_ALL)
+    return dict(sorted(links_dict.items(), key=lambda item: -item[1]))
+
+    # for link in dict(sorted(links_dict.items(), key=lambda item: -item[1])):
+    #     print(Fore.GREEN + f'Результат: {link}. Количество совпадений: {links_dict[link]}' + Style.RESET_ALL)

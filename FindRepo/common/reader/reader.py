@@ -7,7 +7,7 @@ from colorama import Fore, Style
 
 from typing import List
 
-from common.errors.errors import ErrorBadPath
+from common.errors.errors import *
 
 
 class Reader:
@@ -112,3 +112,9 @@ class Reader:
             return [(self._read_file(path))]
 
         raise ErrorBadPath
+
+
+    @staticmethod
+    def write(file, link) -> None:
+        with open(link, 'w') as f:
+            f.write(file)
