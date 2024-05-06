@@ -34,7 +34,7 @@ class TokenSplit:
         return shingles
 
     
-    def split(self, code: str) -> List:
+    def split(self, code: str):
         try:
             tokens: List = self._tokenize_code(code)
 

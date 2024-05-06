@@ -8,3 +8,9 @@ parser.add_argument(
     type=str,
     default=""
 )
+
+parser.add_argument(
+    '-type',
+    type=str,
+    default=""
+)

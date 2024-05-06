@@ -8,7 +8,6 @@ from typing import List, Dict
 
 from common.errors.errors import *
 
-from common.whitelist.whitelist import get_whitelist
 from local_search.split.split import TokenSplit
 from local_search.search.search import LocalSearch
 
@@ -31,7 +30,7 @@ def local_finder(link: str):
 
     for file, _ in tqdm(files, desc='Поиск совпадений'):
         try:
-            splitted_current_code: str = split_class.split(file)
+            splitted_current_code = split_class.split(file)
         except ErrorNotTokenize:
             continue
 

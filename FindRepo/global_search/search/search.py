@@ -2,16 +2,18 @@ from typing import List
 
 from global_search.search.github.github import find_github
 from global_search.search.google.google import find_google
-# from search.yandex.yandex import find_yandex
+
+from global_search.formatter.formatter import FormatterPerRequest
 
 
 class Searcher:
-    def __init__(self, is_code):
-        self.search_functions: List = [('google', find_google)]
-        # self.search_functions = []
+    def __init__(self, is_code = True):
+        self.formatter_class = FormatterPerRequest()
 
-        # if is_code:
-        #     self.search_functions.append(('github', find_github))
+        self.search_functions: List = [('google', find_google)]
+
+        if is_code:
+            self.search_functions.append(('github', find_github))
 
 
     def _check_hash(self, hash: str): #в БД реп
@@ -23,10 +25,12 @@ class Searcher:
         Поиск по части кода в доступных сторонних источниках
         '''
 
+        formatted_body: str = self.formatter_class.format(find_body)
+
         links = set()
 
         for function in self.search_functions:
-            results = function[1](find_body)
+            results = function[1](formatted_body)
             
             for link in results:
                 links.add(link)
