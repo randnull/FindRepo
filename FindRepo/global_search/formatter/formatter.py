@@ -7,7 +7,7 @@ class FormatterPerRequest:
 
 
     @staticmethod
-    def delete_forbidden_char(raw_object: str, forbidden_char: List) -> str:
+    def _delete_forbidden_char(raw_object: str, forbidden_char: List) -> str:
         for ch in forbidden_char:
             raw_object = raw_object.replace(ch, '')
         return raw_object
@@ -26,7 +26,7 @@ class FormatterPerRequest:
 
 
     def format(self, raw_object: str) -> str:
-        new_object: str = self._delete_whitespaces(raw_object)
+        new_object: str = self._delete_spaces(raw_object)
 
         return new_object
 

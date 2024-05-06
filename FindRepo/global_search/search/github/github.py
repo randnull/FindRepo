@@ -6,25 +6,26 @@ import functools
 
 from typing import List
 
-from global_search.formatter.formatter import FormatterPerRequest
-
 
 forbidden_char = ['"', '@']
 
 
+def filter_code(code: str) -> str:
+    for ch in forbidden_char:
+        code = code.replace(ch, '')
+    return code
+
+
 @functools.lru_cache(maxsize=10000)
 def find_github(code: str) -> List[str]:
-    try:
-        config = toml.load('authorization.toml')
-        token = config['token_github']['token']
-    except:
-        return list()
+    config = toml.load('authorization.toml')
+    token = config['token_github']['token']
 
     headers = {
         'Authorization': token
     }
-
-    code_to_request = FormatterPerRequest.delete_forbidden_char(code, forbidden_char)
+    # forbidden_char = ['"', '@']
+    code_to_request = filter_code(code)
 
     url_with_code = f'https://api.github.com/search/code?q={code_to_request}'
 

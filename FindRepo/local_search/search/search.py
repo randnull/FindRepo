@@ -1,4 +1,4 @@
-from typing import List, Dict
+from typing import List
 
 
 class LocalSearch:
@@ -6,25 +6,19 @@ class LocalSearch:
         pass
 
 
-    def _get_all_tokens(self):
-        return set() #БД
+    def _get_all_tokens(self) -> List:
+        pass #БД
 
+    
+    def _get_similar(self, tokens: List) -> List:
+        all_tokens: List = self._get_all_tokens()
 
-    def _get_similar(self, new_tokens) -> List:
-        all_tokens = self._get_all_tokens()
-
-        # results: Dict = dict()
-
-        # for token in all_tokens:
-        #     len_intersect_tokens: int = len(token.intersection(new_tokens))
-        #     len_union_tokens: int = len(token.union(new_tokens))
-
-        #     results
+        #Jaccard
 
         similar: List = list()
 
         return similar
 
 
-    def find(self, new_tokens: List) -> List:
-        return self._get_similar(new_tokens)
+    def find(self, tokens: List) -> List:
+        return self._get_similar(tokens)

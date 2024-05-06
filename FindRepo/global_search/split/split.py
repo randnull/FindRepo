@@ -3,8 +3,6 @@ from common.hash.hash import Hash
 import ast
 import astunparse
 
-# from abc import ABC, abstractmethod
-
 from colorama import init
 init()
 from colorama import Fore, Back, Style
@@ -90,8 +88,8 @@ class Split:
 
         if code_lang == 'py':
             return self._split_python_code(code)
-        # if code_lang == 'cpp':
-        #     return self._split_cpp_code(code)
+        if code_lang == 'cpp':
+            return self._split_cpp_code(code)
         else:
             return self._split_another_code(code)
 

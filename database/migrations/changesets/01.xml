@@ -8,19 +8,13 @@
         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
         http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
 
-    <changeSet author="k.goryunov" id="create-hash-table">
-        <createTable tableName="hash-table">
+    <changeSet author="k.goryunov" id="create-global-hash-table">
+        <createTable tableName="global-hash-table">
             <column name="hash" type="VARCHAR">
                 <constraints nullable="false"/>
             </column>
 
-            <column name="first_result" type="VARCHAR">
-            </column>
-
-            <column name="second_result" type="VARCHAR">
-            </column>
-
-            <column name="third_result" type="VARCHAR">
+            <column name="links" type="VARCHAR[]">
             </column>
         </createTable>
     </changeSet>

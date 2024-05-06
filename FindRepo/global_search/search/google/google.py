@@ -15,7 +15,7 @@ def google_request(object_body: str):
 
     params = {
         "text": object_body[:31],
-        "limit": 5,
+        "limit": 10,
     }
 
     try:
