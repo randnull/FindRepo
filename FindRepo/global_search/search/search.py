@@ -3,7 +3,7 @@ from typing import List
 from global_search.search.github.github import find_github
 from global_search.search.google.google import find_google
 
-from global_search.formatter.formatter import FormatterPerRequest
+from common.formatter.formatter import FormatterPerRequest
 
 
 class Searcher:
@@ -17,7 +17,11 @@ class Searcher:
 
 
     def _check_hash(self, hash: str): #в БД реп
-        return [], False
+        return []
+
+    
+    def _save_hash(self, hash: str, links: List):
+        pass
 
 
     def _find_serp(self, find_body: str) -> List:
@@ -46,11 +50,13 @@ class Searcher:
         body: str = find_object[0]
         body_hash: str = find_object[1]
 
-        db_result, is_find = self._check_hash(body_hash)
+        db_result = self._check_hash(body_hash)
 
-        if is_find:
+        if db_result is None:
             return db_result
-        
+
         links: List = self._find_serp(body)
+
+        self._save_hash(body_hash, links)
 
         return links

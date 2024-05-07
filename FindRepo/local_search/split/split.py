@@ -7,6 +7,8 @@ from typing import List
 
 from common.errors.errors import *
 
+from common.config.config import config
+
 
 class TokenSplit:
     def __init__(self, hash_func: str):
@@ -38,7 +40,9 @@ class TokenSplit:
         try:
             tokens: List = self._tokenize_code(code)
 
-            shingles = self._get_shingles(tokens, 3) # В config
+            shingle_size: int = int(config['TokenSplit']['shingle_size'])
+
+            shingles = self._get_shingles(tokens, shingle_size)
         except:
             raise ErrorNotTokenize
 

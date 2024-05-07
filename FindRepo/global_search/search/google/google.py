@@ -6,16 +6,24 @@ from colorama import init
 init()
 from colorama import Fore, Back, Style
 
+from common.config.config import config
+
 
 @functools.lru_cache(maxsize=10000)
 def google_request(object_body: str):
     results_set = set()
 
-    url = "http://127.0.0.1:7000/google/search"
+    google_host = config['GlobalSearch']['google_host']
+    google_port = config['GlobalSearch']['google_port']
+
+    url = f"http://{google_host}:{google_port}/google/search"
+
+    google_limit = int(config['GlobalSearch']['google_limit'])
+    google_max_len = int(config['GlobalSearch']['google_max_len'])
 
     params = {
-        "text": object_body[:31],
-        "limit": 5,
+        "text": object_body[:google_max_len],
+        "limit": google_limit,
     }
 
     try:

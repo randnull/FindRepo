@@ -2,3 +2,5 @@ __pycache__/
 *.py[cod]
 *$py.class
 *.toml
+.pytest_cache
+.DS_Store

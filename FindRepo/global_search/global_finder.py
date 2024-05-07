@@ -1,7 +1,5 @@
 from tqdm import tqdm
-# from progress.bar import IncrementalBar
 
-# from argpars.parser import parser
 from common.reader.reader import Reader
 from global_search.search.search import Searcher
 from global_search.split.split import Split

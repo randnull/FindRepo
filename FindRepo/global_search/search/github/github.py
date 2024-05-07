@@ -6,7 +6,9 @@ import functools
 
 from typing import List
 
-from global_search.formatter.formatter import FormatterPerRequest
+from common.config.config import config
+
+from common.formatter.formatter import FormatterPerRequest
 
 
 forbidden_char = ['"', '@']
@@ -15,8 +17,8 @@ forbidden_char = ['"', '@']
 @functools.lru_cache(maxsize=10000)
 def find_github(code: str) -> List[str]:
     try:
-        config = toml.load('authorization.toml')
-        token = config['token_github']['token']
+        toml_config = toml.load('authorization.toml')
+        token = toml_config['token_github']['token']
     except:
         return list()
 
@@ -25,8 +27,10 @@ def find_github(code: str) -> List[str]:
     }
 
     code_to_request = FormatterPerRequest.delete_forbidden_char(code, forbidden_char)
+    
+    api_link: str = config['GlobalSearch']['github_api_link']
 
-    url_with_code = f'https://api.github.com/search/code?q={code_to_request}'
+    url_with_code = f'{api_link}={code_to_request}'
 
     try:
         response = requests.get(url_with_code, headers=headers)

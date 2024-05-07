@@ -3,13 +3,13 @@ from common.hash.hash import Hash
 import ast
 import astunparse
 
-# from abc import ABC, abstractmethod
-
 from colorama import init
 init()
 from colorama import Fore, Back, Style
 
 from typing import List
+
+from common.config.config import config
 
 
 class Split:
@@ -68,8 +68,10 @@ class Split:
 
         hash_list: List = list()
 
-        for i in range(0, len(words), 5):
-            part = ' '.join(words[i:i+5]) #проверить
+        split_size = int(config['Split']['split_size'])
+
+        for i in range(0, len(words), split_size):
+            part = ' '.join(words[i:i+split_size]) #проверить
 
             normal_part = part.replace('\n', '')
 
