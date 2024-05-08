@@ -23,7 +23,7 @@ class LocalSearch:
 
         similar: List = list()
 
-        return similar
+        return similar # Добавление при Jaccard >=0.45
 
 
     def find(self, new_tokens: List) -> List:

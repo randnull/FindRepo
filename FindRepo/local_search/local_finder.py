@@ -38,3 +38,5 @@ def local_finder(link: str):
 
         for link in find_links:
             links_dict[link] = links_dict.get(link, 0) + 1
+
+    return dict(sorted(links_dict.items(), key=lambda item: -item[1]))

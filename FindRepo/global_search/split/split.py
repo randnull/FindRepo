@@ -18,41 +18,6 @@ class Split:
         self.fast = fast
 
 
-    def _split_python_code(self, code: str) -> List:
-        '''
-        Разделяет код(python) на функции (def) и весь остальной код
-        '''
-
-        tree = ast.parse(code)
-
-        parts: List = []
-
-        for node in ast.walk(tree):
-            if isinstance(node, ast.FunctionDef) or isinstance(node, ast.AsyncFunctionDef):
-                parts.append(astunparse.unparse(node).strip())
-        
-        tree.body: List = [node for node in tree.body if not (isinstance(node, ast.FunctionDef) or isinstance(node, ast.AsyncFunctionDef))]
-
-        parts.append(astunparse.unparse(tree).strip())
-
-        hash_list: List = list()
-
-        for part in parts:
-            normal_part: str = part.replace('\n', '')
-
-            if normal_part == '':
-                continue
-
-            hash_list.append((normal_part, self.hash_class.hash_object(part)))
-
-        return hash_list
-
-
-    def _split_cpp_code(self, code: str) -> List:
-        #Not implement
-        return []
-
-
     def _split_another_code(self, code: str) -> List:
         '''
         Разделяет код по 5 строк
@@ -83,6 +48,43 @@ class Split:
             hash_list.append((normal_part, self.hash_class.hash_object(part)))
         
         return hash_list
+
+
+    def _split_python_code(self, code: str) -> List:
+        '''
+        Разделяет код(python) на функции (def) и весь остальной код
+        '''
+        try:
+            tree = ast.parse(code)
+        except:
+            return self._split_another_code(code)
+
+        parts: List = []
+
+        for node in ast.walk(tree):
+            if isinstance(node, ast.FunctionDef) or isinstance(node, ast.AsyncFunctionDef):
+                parts.append(astunparse.unparse(node).strip())
+        
+        tree.body: List = [node for node in tree.body if not (isinstance(node, ast.FunctionDef) or isinstance(node, ast.AsyncFunctionDef))]
+
+        parts.append(astunparse.unparse(tree).strip())
+
+        hash_list: List = list()
+
+        for part in parts:
+            normal_part: str = part.replace('\n', '')
+
+            if normal_part == '':
+                continue
+
+            hash_list.append((normal_part, self.hash_class.hash_object(part)))
+
+        return hash_list
+
+
+    def _split_cpp_code(self, code: str) -> List:
+        #Not implement
+        return []
 
 
     def _split_code(self, code: str, code_lang: str) -> List:

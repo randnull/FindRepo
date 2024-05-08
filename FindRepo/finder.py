@@ -6,7 +6,7 @@ from common.errors.errors import *
 
 from common.argpars.parser import get_args
 
-from common.report.generate_report import generate_report
+from common.report.generate_report import generate_global_report
 
 from global_search.global_finder import global_finder
 from local_search.local_finder import local_finder
@@ -23,7 +23,10 @@ def main():
         return
 
     if search_type == 'global':
-        global_finder(path, True)
+        result = global_finder(path, True)
+
+        generate_global_report(result, path)
+
     elif search_type == 'local':
         local_finder(path)
     else:

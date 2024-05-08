@@ -13,8 +13,8 @@ from common.config.config import config
 def google_request(object_body: str):
     results_set = set()
 
-    google_host = config['GlobalSearch']['google_host']
-    google_port = config['GlobalSearch']['google_port']
+    google_host: str = config['GlobalSearch']['google_host']
+    google_port: str = config['GlobalSearch']['google_port']
 
     url = f"http://{google_host}:{google_port}/google/search"
 
@@ -29,7 +29,6 @@ def google_request(object_body: str):
     try:
         response = requests.get(url, params=params)
     except:
-        # print(Fore.RED + 'Google не доступен!' + Style.RESET_ALL)
         return set()
 
     if response.status_code == 200:
@@ -46,8 +45,5 @@ def find_google(object_body: str, is_code=True) -> List[str]:
     results_set = set()
 
     results_set = google_request(object_body=object_body)
-
-    #if len(results_set) != 0:
-        #print(Fore.GREEN + 'Google: Найдено!' + Style.RESET_ALL)
 
     return list(results_set)
