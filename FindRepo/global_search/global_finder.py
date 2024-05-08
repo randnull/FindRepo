@@ -16,6 +16,8 @@ from common.whitelist.whitelist import get_whitelist
 
 
 def global_finder(link: str, fast: bool):
+    '''Поиск по сторонним источникам'''
+
     CODE_TYPES: List = get_whitelist()
 
     reader: Reader = Reader(types=CODE_TYPES)
@@ -24,7 +26,7 @@ def global_finder(link: str, fast: bool):
         files: List = reader.read(link)
     except Exception as ErrorBadPath:
         print(Fore.RED + f'{link} не является путем до файла или директории' + Style.RESET_ALL)
-        return
+        return dict(), False
 
     split_class: Split = Split(hash_func='md5')
 
@@ -45,4 +47,4 @@ def global_finder(link: str, fast: bool):
         for link in links:
             links_dict[link] = links_dict.get(link, 0) + 1
 
-    return dict(sorted(links_dict.items(), key=lambda item: -item[1]))
+    return dict(sorted(links_dict.items(), key=lambda item: -item[1])), True

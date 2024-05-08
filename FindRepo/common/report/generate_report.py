@@ -13,11 +13,16 @@ from common.reader.reader import Reader
 from common.config.config import config
 
 
-def generate_global_report(result_data, path, save=True) -> None:
-    os.makedirs('reports', exist_ok=True)
+def generate_report(result_data: Dict, path: str, search_type: str, save=True) -> None:
+    '''Генерирует и сохраняет отчет о проверке в формате json'''
+
+    dir_name: str = config['Report']['dir_name']
+
+    os.makedirs(dir_name, exist_ok=True)
 
     report: Dict = {"Report": {
-        "path": path
+        "path": path,
+        "search_type": search_type
     }}
 
     if result_data is None or len(result_data) == 0:
@@ -35,10 +40,10 @@ def generate_global_report(result_data, path, save=True) -> None:
             }
 
     report_json = json.dumps(report, indent=4)
-    
-    file_path: str = os.getcwd() + "/reports"
+
+    file_path: str = os.getcwd() + f"/{dir_name}"
     current_datetime = datetime.now().strftime("%y-%m-%d-%h-%m-%s")
 
     if save:
-        Reader.write(report_json, f'reports/global_report{current_datetime}.json')
+        Reader.write(report_json, f'{dir_name}/global_report{current_datetime}.json')
         print(Fore.GREEN + f"Файл с отчетом успешно сохранен по пути {file_path}")

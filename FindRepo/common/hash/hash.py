@@ -8,6 +8,8 @@ class Hash:
 
 
     def hash_object(self, object: str):
+        '''Хэширует объект'''
+
         encoded_object = object.encode()
 
         hash_object = self.hash_func(encoded_object)

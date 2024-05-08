@@ -16,6 +16,8 @@ forbidden_char = ['"', '@']
 
 @functools.lru_cache(maxsize=10000)
 def find_github(code: str) -> List[str]:
+    '''Поиск по github'''
+
     try:
         toml_config = toml.load('authorization.toml')
         token = toml_config['token_github']['token']

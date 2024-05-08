@@ -11,6 +11,8 @@ from common.config.config import config
 
 @functools.lru_cache(maxsize=10000)
 def google_request(object_body: str):
+    '''Поиск по google'''
+
     results_set = set()
 
     google_host: str = config['GlobalSearch']['google_host']

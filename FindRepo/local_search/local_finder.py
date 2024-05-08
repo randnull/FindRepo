@@ -15,13 +15,15 @@ from common.reader.reader import Reader
 
 
 def local_finder(link: str):
+    '''Поиск по базе данны'''
+
     reader: Reader = Reader()
 
     try:
         files: List = reader.read(link)
     except Exception as ErrorBadPath:
         print(Fore.RED + f'{link} не является путем до файла или директории' + Style.RESET_ALL)
-        return
+        return dict(), False
 
     split_class: TokenSplit = TokenSplit(hash_func='md5')
     search_class: LocalSearch = LocalSearch()
@@ -39,4 +41,4 @@ def local_finder(link: str):
         for link in find_links:
             links_dict[link] = links_dict.get(link, 0) + 1
 
-    return dict(sorted(links_dict.items(), key=lambda item: -item[1]))
+    return dict(sorted(links_dict.items(), key=lambda item: -item[1])), True
