@@ -16,6 +16,8 @@ class TokenSplit:
 
 
     def _tokenize_code(self, code: str) -> List:
+        '''Токенизация кода'''
+
         tokens: List = list()
 
         for toknum in tokenize.tokenize(BytesIO(code.encode('utf-8')).readline):
@@ -26,6 +28,8 @@ class TokenSplit:
 
 
     def _get_shingles(self, tokens: List, shingle_size: int):
+        '''Разбиение алгоритмом шилингов'''
+
         shingles = set()
 
         for i in range(len(tokens) - shingle_size + 1):
@@ -37,6 +41,8 @@ class TokenSplit:
 
     
     def split(self, code: str):
+        '''Разделение кода на части'''
+        
         try:
             tokens: List = self._tokenize_code(code)
 

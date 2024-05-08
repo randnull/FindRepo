@@ -23,7 +23,7 @@ def main():
         return
 
     if search_type == 'global':
-        result, ok = global_finder(path, True)
+        result, ok = global_finder(path)
     elif search_type == 'local':
         result, ok = local_finder(path)
     else:

@@ -43,7 +43,7 @@ def google_request(object_body: str):
 
 
 @functools.lru_cache(maxsize=10000)
-def find_google(object_body: str, is_code=True) -> List[str]:
+def find_google(object_body: str) -> List[str]:
     results_set = set()
 
     results_set = google_request(object_body=object_body)

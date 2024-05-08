@@ -13,9 +13,8 @@ from common.config.config import config
 
 
 class Split:
-    def __init__(self, hash_func: str, fast: bool = False):
+    def __init__(self, hash_func: str):
         self.hash_class = Hash(hash_func)
-        self.fast = fast
 
 
     def _split_another_code(self, code: str) -> List:
@@ -99,7 +98,7 @@ class Split:
         else:
             return self._split_another_code(code)
 
-    
+
     def _split_text(self, text: str) -> List:
         '''
         Разделяет текст на части

@@ -8,14 +8,14 @@ from typing import List, Dict
 
 from common.errors.errors import *
 
-from local_search.split.split import TokenSplit
+from local_search.token_split.token_split import TokenSplit
 from local_search.search.search import LocalSearch
 
 from common.reader.reader import Reader
 
 
 def local_finder(link: str):
-    '''Поиск по базе данны'''
+    '''Поиск по базе данных'''
 
     reader: Reader = Reader()
 
