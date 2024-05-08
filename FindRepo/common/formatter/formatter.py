@@ -32,7 +32,7 @@ class FormatterPerRequest:
     def format(self, raw_object: str) -> str:
         '''Стандартизирует объект'''
 
-        new_object: str = self._delete_whitespaces(raw_object)
+        new_object: str = self._delete_spaces(raw_object)
 
         return new_object
 
