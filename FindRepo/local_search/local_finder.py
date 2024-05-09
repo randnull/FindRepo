@@ -14,18 +14,19 @@ from local_search.search.search import LocalSearch
 from common.reader.reader import Reader
 
 
-def local_finder(link: str):
+def local_finder(path: str):
     '''Поиск по базе данных'''
 
     reader: Reader = Reader()
 
     try:
-        files: List = reader.read(link)
+        files: List = reader.read(path)
     except Exception as ErrorBadPath:
-        print(Fore.RED + f'{link} не является путем до файла или директории' + Style.RESET_ALL)
+        print(Fore.RED + f'{path} не является путем до файла или директории' + Style.RESET_ALL)
         return dict(), False
 
     split_class: TokenSplit = TokenSplit(hash_func='md5')
+
     search_class: LocalSearch = LocalSearch()
 
     links_dict: Dict = dict()

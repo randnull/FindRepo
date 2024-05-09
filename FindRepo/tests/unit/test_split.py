@@ -9,6 +9,7 @@ class TestSplit:
     def get_split_class(self):
         return Split(hash_func='md5')
 
+
     @pytest.fixture
     def get_reader_class(self):
         return Reader()
