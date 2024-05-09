@@ -27,11 +27,11 @@ def generate_report(result_data: Dict, path: str, search_type: str, save=True) -
 
     if result_data is None or len(result_data) == 0:
         report["Report"].update({
-            "result": "No one match"
+            "status": "No one match"
         })
     else:
         report["Report"].update({
-            "result": "Founded"
+            "status": "Founded"
         })
         for result_number, link in enumerate(result_data):
             report["Report"][f"result_{result_number + 1}"] = {

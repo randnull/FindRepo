@@ -18,11 +18,8 @@ forbidden_char = ['"', '@']
 def find_github(code: str) -> List[str]:
     '''Поиск по github'''
 
-    try:
-        toml_config = toml.load('authorization.toml')
-        token = toml_config['token_github']['token']
-    except:
-        return list()
+    toml_config = toml.load('FindRepo/auth/authorization.toml')
+    token = toml_config['token_github']['token']
 
     headers = {
         'Authorization': token
