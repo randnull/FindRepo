@@ -5,6 +5,10 @@ from global_search.search.google.google import find_google
 
 from common.formatter.formatter import FormatterPerRequest
 
+import requests
+
+from common.config.config import config
+
 
 class Searcher:
     def __init__(self, is_code = True):
@@ -17,11 +21,20 @@ class Searcher:
 
 
     def _check_hash(self, hash: str): #в БД реп
+        database_host: str = config['Database']['service_host']
+        database_port: str = config['Database']['service_port']
+
+        get_handler: str = config['Database']['service_port']
+
         return []
+
 
     
     def _save_hash(self, hash: str, links: List):
-        pass
+        database_host: str = config['Database']['service_host']
+        database_port: str = config['Database']['service_port']
+
+        add_handler: str = config['Database']['service_port']
 
 
     def _find_serp(self, find_body: str) -> List:
@@ -52,7 +65,7 @@ class Searcher:
 
         db_result = self._check_hash(body_hash)
 
-        if db_result is None:
+        if db_result != []:
             return db_result
 
         links: List = self._find_serp(body)

@@ -28,7 +28,7 @@ class TestSplit:
         expected_types = ['go', 'py', 'txt', 'cpp']
 
         assert len(readed_dir) == 6, f"Ожидалось 6 считанных файла. Получено: {len(readed_dir)}"
-        for file, ftype in readed_dir:
+        for file, ftype, _ in readed_dir:
             assert ftype in expected_types, f"Ожидался один из типов: {expected_types}. Получено: {ftype}"
 
 

@@ -61,18 +61,18 @@ class Reader:
             with open(path, 'r') as f:
                 file_text: str = f.read()
         except:
-            return (None, None)
+            return (None, None, None)
 
         file_type: str = self._check_file_type(path)
 
         if file_type is None:
-            return (None, None)
+            return (None, None, None)
 
         if file_type == 'ipynb':
             file_text = self._parse_ipynb(file_text)
             file_type = 'py'
 
-        return (file_text, file_type)
+        return (file_text, file_type, path)
 
 
     def _read_direct(self, path: str) -> List:
@@ -87,13 +87,13 @@ class Reader:
 
                 file_path = os.path.join(root, file)
                 
-                file_text, file_type = self._read_file(file_path)
+                file_text, file_type, path_file = self._read_file(file_path)
 
-                if not file_text or not file_type:
+                if not file_text or not file_type or not path_file:
                     continue
-                    
-                files_texts.append((file_text, file_type))
-                
+
+                files_texts.append((file_text, file_type, path_file))
+
                 print(Fore.GREEN + f'Добавлено: {file}' + Style.RESET_ALL)
 
         return files_texts

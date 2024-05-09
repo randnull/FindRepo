@@ -32,7 +32,7 @@ def global_finder(path: str):
 
     splited: List = list()
 
-    for file, ftype in tqdm(files, desc='Деление объекта'):
+    for file, ftype, _ in tqdm(files, desc='Деление объекта'):
         is_code: bool = ftype in CODE_TYPES
 
         splited += split_class.split(file, ftype, is_code)

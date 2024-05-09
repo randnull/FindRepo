@@ -1,30 +1,41 @@
 from typing import List, Dict
 
+import requests
+
+from common.config.config import config
+
 
 class LocalSearch:
     def __init__(self):
         pass
 
 
-    def _get_all_tokens(self):
-        return set() #БД
+    def _save(self, tokens, link):
+        database_host: str = config['Database']['service_host']
+        database_port: str = config['Database']['service_port']
+        
+        add_handler: str = config['LocalSearch']['add_handler']
 
 
     def _get_similar(self, new_tokens) -> List:
-        all_tokens = self._get_all_tokens()
+        database_host: str = config['Database']['service_host']
+        database_port: str = config['Database']['service_port']
+        
+        get_handler: str = config['LocalSearch']['add_handler']
 
-        # results: Dict = dict()
-
-        # for token in all_tokens:
-        #     len_intersect_tokens: int = len(token.intersection(new_tokens))
-        #     len_union_tokens: int = len(token.union(new_tokens))
-
-        #     results
+        try:
+            response = requests.get(f"{database_host}:{database_port}/{get_handler}")
+        except:
+            return []
 
         similar: List = list()
 
-        return similar # Добавление при Jaccard >=0.45
+        return similar # Jaccard >=0.45
 
 
-    def find(self, new_tokens: List) -> List:
-        return self._get_similar(new_tokens)
+    def find(self, new_tokens: List, link: str) -> List:
+        similar: List = self._get_similar(new_tokens)
+
+        self._save(new_tokens, link)
+
+        return similar

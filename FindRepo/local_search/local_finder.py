@@ -31,13 +31,13 @@ def local_finder(path: str):
 
     links_dict: Dict = dict()
 
-    for file, _ in tqdm(files, desc='Поиск совпадений'):
+    for file, _, file_path in tqdm(files, desc='Поиск совпадений'):
         try:
-            splitted_current_code = split_class.split(file)
+            splitted_current_code = list(split_class.split(file))
         except ErrorNotTokenize:
             continue
 
-        find_links: List = search_class.find(splitted_current_code)
+        find_links: List = search_class.find(splitted_current_code, file_path)
 
         for link in find_links:
             links_dict[link] = links_dict.get(link, 0) + 1
