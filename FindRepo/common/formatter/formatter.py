@@ -7,15 +7,16 @@ class FormatterPerRequest:
 
 
     @staticmethod
-    def delete_forbidden_char(raw_object: str, forbidden_char: List) -> str:
-        '''Удаляет переданные символы'''
+    def delete_forbidden_char(raw_object: str) -> str:
+        '''Удаляет запрещенные для запроса символы'''
+        github_forbidden_char: List = ['"', '@']
 
-        for ch in forbidden_char:
+        for ch in github_forbidden_char:
             raw_object = raw_object.replace(ch, '')
         return raw_object
 
 
-    def _delete_spaces(self, raw_object: str) -> str:
+    def _delete_empty_lines(self, raw_object: str) -> str:
         '''Удаляет пустые строки'''
 
         lines: List = raw_object.split('\n')
@@ -32,7 +33,7 @@ class FormatterPerRequest:
     def format(self, raw_object: str) -> str:
         '''Стандартизирует объект'''
 
-        new_object: str = self._delete_spaces(raw_object)
+        new_object: str = self._delete_empty_lines(raw_object)
 
         return new_object
 

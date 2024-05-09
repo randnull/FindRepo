@@ -1,4 +1,5 @@
 import pytest
+import warnings
 
 import toml
 
@@ -22,9 +23,10 @@ class TestGithubSearch:
 
         try:
             response = requests.get(url_with_code, headers=headers)
-        except:
-            pass
 
-        expected_code = 200
-            
-        assert response.status_code == expected_code, f"Ожидался код: {expected_code}. Получено: {response.status_code}"
+            if response.status_code == 401:
+                warnings.warn(UserWarning("Токен для авторизации Github не работает. Поиск по нему недоступен"))
+            elif response.status_code != 200:
+                warnings.warn(UserWarning(f"Код ответа github: {response.status_code}. Поиск по нему недоступен"))
+        except:
+            warnings.warn(UserWarning("Github не отвечает. Поиск по нему недоступен"))

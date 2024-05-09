@@ -11,9 +11,6 @@ from common.config.config import config
 from common.formatter.formatter import FormatterPerRequest
 
 
-forbidden_char = ['"', '@']
-
-
 @functools.lru_cache(maxsize=10000)
 def find_github(code: str) -> List[str]:
     '''Поиск по github'''
@@ -25,7 +22,7 @@ def find_github(code: str) -> List[str]:
         'Authorization': token
     }
 
-    code_to_request = FormatterPerRequest.delete_forbidden_char(code, forbidden_char)
+    code_to_request = FormatterPerRequest.delete_forbidden_char(code)
     
     api_link: str = config['GlobalSearch']['github_api_link']
 
@@ -38,7 +35,7 @@ def find_github(code: str) -> List[str]:
 
     try:
         response_json = response.json()['items']
-    except Exception as ex:
+    except:
         return []
 
     answer_list = list()
