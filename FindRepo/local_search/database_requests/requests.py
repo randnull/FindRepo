@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Dict
 
 import requests
 import json
@@ -40,10 +40,10 @@ def get_local(hashes: List) -> List:
 
         response_json = response.json()
 
-        similar: List = list()
+        similar: Dict = dict()
 
-        for link in response_json:
-            similar.append(link['link'])
+        for index, link in enumerate(response_json[0]):
+            similar[link['link']] = response_json[1][index]
 
         return similar
     except:
