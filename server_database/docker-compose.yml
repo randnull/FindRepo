@@ -1,0 +1,72 @@
+version: '3.8'
+services:
+  postgres-container:
+    image: postgres:15.2
+    container_name: postgresql
+    restart: unless-stopped
+    ports:
+      - 5432:5432
+    networks:
+      - database-network
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=hash_data
+    healthcheck:
+      test: "pg_isready -U postgres"
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    restart: unless-stopped
+    entrypoint: >
+      /bin/sh -c "
+      cp -f /pgadmin4/pgpass /var/lib/pgadmin/;
+      chmod 600 /var/lib/pgadmin/pgpass;
+      /entrypoint.sh
+      "
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: 'False'
+    ports:
+      - "8080:80"
+    networks:
+      - database-network
+    volumes:
+      - ./database/pgadmin/servers.json:/pgadmin4/servers.json:ro
+      - ./database/pgadmin/pgpass:/pgadmin4/pgpass:ro
+  migration_hash_table:
+    image: liquibase/liquibase:4.19.0
+    networks:
+      - database-network
+    depends_on:
+      - postgres-container
+    volumes:
+      - ./database/migrations:/app
+    command: --defaultsFile=/app/dev.properties update
+  api:
+    container_name: fastapi
+    build:
+      context: .
+      dockerfile: ./api/Dockerfile
+    command: uvicorn api:app --reload --host 0.0.0.0 --port 8000
+    volumes:
+      - ./api:/code/
+      - ./repository:/code/repository
+      - ./models:/code/models
+    ports:
+      - "8000:8000"
+    networks:
+      - database-network
+    depends_on:
+      migration_hash_table:
+        condition: service_completed_successfully
+
+
+networks:
+  database-network:
+    name: "database-network"
