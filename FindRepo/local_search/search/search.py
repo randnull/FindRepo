@@ -1,36 +1,24 @@
 from typing import List, Dict
 
 import requests
+import json
+
+from local_search.database_requests.requests import get_local, add_local
 
 from common.config.config import config
 
 
 class LocalSearch:
-    def __init__(self):
+    def __init__(self) -> None:
         pass
 
 
-    def _save(self, tokens, link):
-        database_host: str = config['Database']['service_host']
-        database_port: str = config['Database']['service_port']
-        
-        add_handler: str = config['LocalSearch']['add_handler']
+    def _save(self, tokens: List, link: str) -> None:
+        add_local(tokens, link)
 
 
-    def _get_similar(self, new_tokens) -> List:
-        database_host: str = config['Database']['service_host']
-        database_port: str = config['Database']['service_port']
-        
-        get_handler: str = config['LocalSearch']['add_handler']
-
-        try:
-            response = requests.get(f"{database_host}:{database_port}/{get_handler}")
-        except:
-            return []
-
-        similar: List = list()
-
-        return similar # Jaccard >=0.45
+    def _get_similar(self, new_tokens: List) -> List:
+        return get_local(new_tokens)
 
 
     def find(self, new_tokens: List, link: str) -> List:

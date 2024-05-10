@@ -5,9 +5,7 @@ from global_search.search.google.google import find_google
 
 from common.formatter.formatter import FormatterPerRequest
 
-import requests
-
-from common.config.config import config
+from global_search.database_requests.requests import add_global, get_global
 
 
 class Searcher:
@@ -20,21 +18,12 @@ class Searcher:
             self.search_functions.append(('github', find_github))
 
 
-    def _check_hash(self, hash: str): #в БД реп
-        database_host: str = config['Database']['service_host']
-        database_port: str = config['Database']['service_port']
-
-        get_handler: str = config['Database']['service_port']
-
-        return []
+    def _check_hash(self, hash: str):
+        return get_global(hash)
 
 
-    
     def _save_hash(self, hash: str, links: List):
-        database_host: str = config['Database']['service_host']
-        database_port: str = config['Database']['service_port']
-
-        add_handler: str = config['Database']['service_port']
+        add_global(hash, links)
 
 
     def _find_serp(self, find_body: str) -> List:
@@ -67,9 +56,10 @@ class Searcher:
 
         if db_result != []:
             return db_result
-
+        
         links: List = self._find_serp(body)
 
-        self._save_hash(body_hash, links)
+        if links != []:
+            self._save_hash(body_hash, links)
 
         return links
