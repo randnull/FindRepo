@@ -15,7 +15,7 @@ from typing import List, Dict
 from common.whitelist.whitelist import get_whitelist
 
 
-def global_finder(path: str):
+def global_finder(path: str) -> Dict:
     '''Поиск по сторонним источникам'''
 
     CODE_TYPES: List = get_whitelist()

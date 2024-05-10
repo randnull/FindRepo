@@ -14,7 +14,7 @@ from local_search.search.search import LocalSearch
 from common.reader.reader import Reader
 
 
-def local_finder(path: str):
+def local_finder(path: str) -> Dict:
     '''Поиск по базе данных'''
 
     reader: Reader = Reader()
