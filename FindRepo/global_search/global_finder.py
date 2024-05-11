@@ -12,20 +12,25 @@ from common.errors.errors import *
 
 from typing import List, Dict
 
-from common.whitelist.whitelist import get_whitelist
+from common.whitelist.whitelist import get_whitelist, get_code_whitelist
 
 
-def global_finder(path: str) -> Dict:
+def global_finder(path: str, github_flag: bool) -> Dict:
     '''Поиск по сторонним источникам'''
 
-    CODE_TYPES: List = get_whitelist()
+    ALLOWED_TYPES: List = get_whitelist()
 
-    reader: Reader = Reader(types=CODE_TYPES)
+    CODE_TYPES: List = get_code_whitelist()
+
+    reader: Reader = Reader(types=ALLOWED_TYPES)
 
     try:
         files: List = reader.read(path)
-    except Exception as ErrorBadPath:
+    except ErrorBadPath:
         print(Fore.RED + f'{path} не является путем до файла или директории' + Style.RESET_ALL)
+        return dict(), False
+    except ErrorNoFileToSearch:
+        print(Fore.RED + f'Путь {path} не содержит ни одного доступного файла' + Style.RESET_ALL)
         return dict(), False
 
     split_class: Split = Split(hash_func='md5')
@@ -38,10 +43,10 @@ def global_finder(path: str) -> Dict:
         splited += split_class.split(file, ftype, is_code)
 
     links_dict: Dict = dict()
+    
+    searcher_class: Searcher = Searcher(github_flag)
 
     for part in tqdm(splited, desc='Поиск совпадений'):
-        searcher_class: Searcher = Searcher(is_code=is_code)
-
         links: List = searcher_class.find(part)
 
         for link in links:

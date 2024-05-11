@@ -35,7 +35,7 @@ class Split:
         split_size = int(config['Split']['split_size'])
 
         for i in range(0, len(words), split_size):
-            part = ' '.join(words[i:i+split_size]) #проверить
+            part = ' '.join(words[i:i+split_size])
 
             normal_part = part.replace('\n', '')
 
@@ -81,11 +81,6 @@ class Split:
         return hash_list
 
 
-    def _split_cpp_code(self, code: str) -> List:
-        #Not implement
-        return []
-
-
     def _split_code(self, code: str, code_lang: str) -> List:
         '''
         Разделяет код на части
@@ -93,8 +88,6 @@ class Split:
 
         if code_lang == 'py':
             return self._split_python_code(code)
-        # if code_lang == 'cpp':
-        #     return self._split_cpp_code(code)
         else:
             return self._split_another_code(code)
 
@@ -103,7 +96,6 @@ class Split:
         '''
         Разделяет текст на части
         '''
-
         splited_text: List = text.split('.')
         
         hash_list: List = list()
@@ -119,7 +111,7 @@ class Split:
                 continue
 
             hash_list.append((normal_part, self.hash_class.hash_object(part)))
-        
+
         return hash_list
 
 

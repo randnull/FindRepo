@@ -12,3 +12,7 @@ class ErrorEmptyFile(Exception):
 
 class ErrorEmtpyType(Exception):
     pass
+
+
+class ErrorNoFileToSearch(Exception):
+    pass

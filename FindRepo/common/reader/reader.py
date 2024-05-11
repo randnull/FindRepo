@@ -96,6 +96,9 @@ class Reader:
 
                 print(Fore.GREEN + f'Добавлено: {file}' + Style.RESET_ALL)
 
+        if files_texts == []:
+            raise ErrorNoFileToSearch
+
         return files_texts
 
 
@@ -107,9 +110,14 @@ class Reader:
         if os.path.isdir(path):
             return self._read_direct(path)
         elif os.path.isfile(path):
+            file_text, file_type, path_file = self._read_file(path)
+
+            if not file_text or not file_type or not path_file:
+                raise ErrorNoFileToSearch
+
             print(Fore.GREEN + f'Добавлено: {path}' + Style.RESET_ALL)
 
-            return [(self._read_file(path))]
+            return [(file_text, file_type, path_file)]
 
         raise ErrorBadPath
 

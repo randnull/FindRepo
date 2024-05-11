@@ -9,13 +9,13 @@ from global_search.database_requests.requests import add_global, get_global
 
 
 class Searcher:
-    def __init__(self, is_code = True):
+    def __init__(self, need_github: bool = False):
         self.formatter_class = FormatterPerRequest()
 
         self.search_functions: List = [('google', find_google)]
 
-        if is_code:
-            self.search_functions.append(('github', find_github))
+        if need_github:
+            self.search_functions: List = [('github', find_github)]
 
 
     def _check_hash(self, hash: str):

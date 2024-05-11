@@ -14,7 +14,7 @@ from local_search.local_finder import local_finder, save_results
 
 def main():
     try:
-        path, search_type, source, save = get_args()
+        path, search_type, source, save, need_github = get_args()
     except ErrorEmptyFile:
         print(Fore.RED + "Не указан путь к файлу или директории (-file)" + Style.RESET_ALL)
         return
@@ -23,7 +23,7 @@ def main():
         return
 
     if search_type == 'global':
-        result, ok = global_finder(path)
+        result, ok = global_finder(path, need_github)
     elif search_type == 'local':
         result, ok, value_to_save = local_finder(path)
     else:

@@ -28,10 +28,15 @@ def get_args():
     )
 
     parser.add_argument(
-        '-save',
-        type=int,
-        default=1,
+        '-only_read',
+        action='store_false',
         help='Сохранить результаты в базе. Если -source не указан, то сохранение по пути.'
+    )
+
+    parser.add_argument(
+        '-github',
+        action='store_true',
+        help='Нужно ли использовать поиск по github (обязателен токен)'
     )
 
     client_args = parser.parse_args()
@@ -42,4 +47,4 @@ def get_args():
     if client_args.type is None:
         raise ErrorEmtpyType
 
-    return (client_args.file, client_args.type, client_args.source, client_args.save)
+    return (client_args.file, client_args.type, client_args.source, client_args.only_read, client_args.github)
