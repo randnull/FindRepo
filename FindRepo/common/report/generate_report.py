@@ -42,8 +42,8 @@ def generate_report(result_data: Dict, path: str, search_type: str, save=True) -
     report_json = json.dumps(report, indent=4)
 
     file_path: str = os.getcwd() + f"/{dir_name}"
-    current_datetime = datetime.now().strftime("%y-%m-%d-%h-%m-%s")
+    current_datetime = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
 
     if save:
-        Reader.write(report_json, f'{dir_name}/report{current_datetime}.json')
+        Reader.write(report_json, f'{dir_name}/report_{current_datetime}.json')
         print(Fore.GREEN + f"Файл с отчетом успешно сохранен по пути {file_path}")
