@@ -32,6 +32,7 @@ def local_finder(path: str):
     search_class: LocalSearch = LocalSearch()
 
     links_dict: Dict = dict()
+    count_dict: Dict = dict()
 
     for file, _, file_path in tqdm(files, desc='Поиск совпадений'):
         try:
@@ -42,7 +43,11 @@ def local_finder(path: str):
         find_links: Dict = search_class.find(splitted_current_code, file_path)
 
         for link in find_links:
-            links_dict[link] = links_dict.get(link, find_links[link])
+            links_dict[link] = links_dict.get(link, 0) + find_links[link]
+            count_dict[link] = count_dict.get(link, 0) + 1
+    
+    for link in links_dict:
+        links_dict[link] /= count_dict[link]
 
     value_to_save = search_class.get_value_to_save()
 
