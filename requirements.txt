@@ -2,3 +2,4 @@ requests==2.31.0
 toml==0.10.2
 astunparse==1.6.3
 pytest==7.4.2
+tqdm==4.66.4
