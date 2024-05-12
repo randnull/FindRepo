@@ -36,16 +36,16 @@ def local_finder(path: str):
 
     for file, _, file_path in tqdm(files, desc='Поиск совпадений'):
         try:
-            splitted_current_code = list(split_class.split(file))
+            splitted_current_code: List = list(split_class.split(file))
         except ErrorNotTokenize:
             continue
-        
+
         find_links: Dict = search_class.find(splitted_current_code, file_path)
 
         for link in find_links:
             links_dict[link] = links_dict.get(link, 0) + find_links[link]
             count_dict[link] = count_dict.get(link, 0) + 1
-    
+
     for link in links_dict:
         links_dict[link] /= count_dict[link]
 

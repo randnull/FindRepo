@@ -13,10 +13,10 @@ from common.reader.reader import Reader
 from common.config.config import config
 
 
-def generate_report(result_data: Dict, path: str, search_type: str, save=True) -> None:
+def generate_report(result_data: Dict, path: str, search_type: str, save_path: str, save=True) -> None:
     '''Генерирует и сохраняет отчет о проверке в формате json'''
-
-    dir_name: str = config['Report']['dir_name']
+    
+    dir_name: str = save_path
 
     os.makedirs(dir_name, exist_ok=True)
 

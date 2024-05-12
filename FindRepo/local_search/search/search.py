@@ -22,7 +22,7 @@ class LocalSearch:
 
     def find(self, new_tokens: List, link: str) -> Dict:
         similar: Dict = self._get_similar(new_tokens)
-        
+
         if ((len(similar) == 0) or (max(similar.values()) < self.max_jaccard_score)):
             self.__value_to_save.append(new_tokens)
 

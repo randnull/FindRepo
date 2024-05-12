@@ -1,5 +1,7 @@
 from tqdm import tqdm
 
+from random import sample
+
 from common.reader.reader import Reader
 from global_search.search.search import Searcher
 from global_search.split.split import Split
@@ -8,6 +10,8 @@ from colorama import init
 init()
 from colorama import Fore, Style
 
+from common.config.config import config
+
 from common.errors.errors import *
 
 from typing import List, Dict
@@ -15,7 +19,7 @@ from typing import List, Dict
 from common.whitelist.whitelist import get_whitelist, get_code_whitelist
 
 
-def global_finder(path: str, github_flag: bool) -> Dict:
+def global_finder(path: str, github_flag: bool, fast_flag: bool) -> Dict:
     '''Поиск по сторонним источникам'''
 
     ALLOWED_TYPES: List = get_whitelist()
@@ -43,7 +47,12 @@ def global_finder(path: str, github_flag: bool) -> Dict:
         splited += split_class.split(file, ftype, is_code)
 
     links_dict: Dict = dict()
-    
+
+    if fast_flag:
+        fast_sample_size: str = config["GlobalSearch"]["fast_sample_size"]
+        if len(splited) > int(fast_sample_size):
+            splited: List = sample(splited, int(fast_sample_size))
+
     searcher_class: Searcher = Searcher(github_flag)
 
     for part in tqdm(splited, desc='Поиск совпадений'):

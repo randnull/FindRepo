@@ -21,6 +21,12 @@ def get_args():
     )
 
     parser.add_argument(
+        '-fast',
+        action='store_true',
+        help='Ускоренный поиск'
+    )
+
+    parser.add_argument(
         '-source',
         type=str,
         default=None,
@@ -28,7 +34,7 @@ def get_args():
     )
 
     parser.add_argument(
-        '-only_read',
+        '-read_only',
         action='store_false',
         help='Сохранить результаты в базе. Если -source не указан, то сохранение по пути.'
     )
@@ -39,6 +45,13 @@ def get_args():
         help='Нужно ли использовать поиск по github (обязателен токен)'
     )
 
+    parser.add_argument(
+        '-save_path',
+        type=str,
+        default="reports",
+        help='Путь для сохранения результата'
+    )
+
     client_args = parser.parse_args()
 
     if client_args.file is None:
@@ -47,4 +60,14 @@ def get_args():
     if client_args.type is None:
         raise ErrorEmtpyType
 
-    return (client_args.file, client_args.type, client_args.source, client_args.only_read, client_args.github)
+    client_agrs = {
+        "file": client_args.file,
+        "type": client_args.type,
+        "source": client_args.source,
+        "read_only": client_args.read_only,
+        "github": client_args.github,
+        "save_path": client_args.save_path,
+        "fast": client_args.fast
+    }
+
+    return client_agrs

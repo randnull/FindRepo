@@ -4,6 +4,8 @@ from colorama import Fore, Style
 
 from common.errors.errors import *
 
+from typing import Dict
+
 from common.argpars.parser import get_args
 
 from common.report.generate_report import generate_report
@@ -14,7 +16,15 @@ from local_search.local_finder import local_finder, save_results
 
 def main():
     try:
-        path, search_type, source, save, need_github = get_args()
+        client_args: Dict = get_args()
+
+        path: str = client_args["file"]
+        search_type: str = client_args["type"]
+        source: str = client_args["source"]
+        save: bool = client_args["read_only"]
+        need_github: bool = client_args["github"]
+        fast: bool = client_args["fast"]
+        save_path: str = client_args["save_path"]
     except ErrorEmptyFile:
         print(Fore.RED + "Не указан путь к файлу или директории (-file)" + Style.RESET_ALL)
         return
@@ -23,7 +33,7 @@ def main():
         return
 
     if search_type == 'global':
-        result, ok = global_finder(path, need_github)
+        result, ok = global_finder(path, need_github, fast)
     elif search_type == 'local':
         result, ok, value_to_save = local_finder(path)
     else:
@@ -31,7 +41,7 @@ def main():
         return
 
     if ok:
-        generate_report(result_data=result, path=path, search_type=search_type)
+        generate_report(result_data=result, path=path, search_type=search_type, save_path=save_path)
 
     if search_type == 'local' and save:
         save_results(path, source, value_to_save)
