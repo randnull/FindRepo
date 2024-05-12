@@ -45,7 +45,9 @@ def main():
 
     if search_type == 'local' and save:
         save_results(path, source, value_to_save)
+    return
 
 
 if __name__ == "__main__":
     main()
+    input("Press enter to proceed...")
