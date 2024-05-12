@@ -1,24 +1,30 @@
 # FindRepo
 
-Позволяет находить файлы по фрагменту кода, используя API github и gitlab.
+Программное обеспечение для поиска источника по файлам.
 
-# Пример работы:
+![GitHub top language](https://img.shields.io/github/languages/top/randnull/FindRepo)
 
-Файл tic_tac_toe.py содержит: 
-```
-def func():
-    print("hello")
+# Краткое описание
 
-func()
+Для проверки на наличие в открытых источниках можно использовать как один файл, так и папку с файлами. По результатам проверки будет сгенерирован отчет, в котором будут указаны найденные файлы.  
+
+
+# Глобальный поиск
+
+Глобальный поиск происходит по внешним ресурсам, таким как Google и Github.
+
+# Локальный поиск
+
+Локальный поиск происходит по собственной базе данных. После поиска (если не было найдено похожего в базе) файлы можно также добавить в базу данных. Помимо этого, если требуется поиск только по своим запросам, возможно поднять собственный севрер с базой данных.
+
+
+# Примеры запросов
+
+```
+make global file=Users/User/Files/File.py args="-save_path Users/User/results"
 ```
 
-Запрос:
 ```
-python3 main.py -file "/tic_tac_toe.py" -max_count 5
+make local file=Users/User/Files/File.py args="-save_path Users/User/results -read_only -source example.com/example/example"
 ```
 
-Ответ:
-```
-github result: https://github.com/preetu391/master-in-python-with-dsa/blob/c96e40d490a7954223e3ad002819cb66654dba55/exceptionHandling.py
-gitlab result: https://gitlab.com/andres-kaldo/tic_tac_toe https://gitlab.com/ours1/tictactoe https://gitlab.com/intz1/tictactoe https://gitlab.com/viljar2/TicTacToe https://gitlab.com/sda-learn-anton/tictactoe
-```
