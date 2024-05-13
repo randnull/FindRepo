@@ -25,7 +25,7 @@ def local_finder(path: str):
         files: List = reader.read(path)
     except Exception as ErrorBadPath:
         print(Fore.RED + f'{path} не является путем до файла или директории' + Style.RESET_ALL)
-        return dict(), False
+        return dict(), False, dict()
 
     split_class: TokenSplit = TokenSplit(hash_func='md5')
 
