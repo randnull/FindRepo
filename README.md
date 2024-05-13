@@ -20,11 +20,51 @@
 
 # Примеры запросов
 
+Пример запроса на глобальный поиск:
+
 ```
 make global file=Users/User/Files/File.py args="-save_path Users/User/results"
 ```
 
+Пример отчета по глобальному поиску:
+
+```
+{
+    "Report": {
+        "path": "/Users/kirillgorunov/Documents/test",
+        "search_type": "global",
+        "status": "Founded",
+        "result_1": {
+            "link": "https://example.com/1",
+            "match": 4
+        },
+        "result_2": {
+            "link": "https://example2.com/2",
+            "match": 3
+        },
+    }
+}
+```
+
+Пример запроса на локальный поиск:
+
 ```
 make local file=Users/User/Files/File.py args="-save_path Users/User/results -read_only -source example.com/example/example"
+```
+
+Пример отчета по локальному поиску:
+
+```
+{
+    "Report": {
+        "path": "/Users/kirillgorunov/Documents/test",
+        "search_type": "local",
+        "status": "Founded",
+        "result_1": {
+            "link": "/Users/kirillgorunov/Documents/test",
+            "match": 1.0
+        }
+    }
+}
 ```
 
