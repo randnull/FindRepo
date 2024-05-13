@@ -9,7 +9,10 @@ class FormatterPerRequest:
     @staticmethod
     def delete_forbidden_char(raw_object: str) -> str:
         '''Удаляет запрещенные для запроса символы'''
-        github_forbidden_char: List = ['"', '@']
+        github_forbidden_char: List = [".", ",", ":", ";", "/", "\\", "'",
+                                    '"', "=", "*", "!", "?", "#", "$", "&"
+                                    "+", "^", "|", "~", "<", ">", "(", ")",
+                                    "{", "}", "[", "]", "@", '`']
 
         for ch in github_forbidden_char:
             raw_object = raw_object.replace(ch, '')
