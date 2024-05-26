@@ -12,6 +12,8 @@ from common.errors.errors import *
 
 class Reader:
     def __init__(self, types: List = None):
+        self.forbidden_types = ['sample', 'pyc']
+
         if types is None:
             self.is_types = False
         else:
@@ -31,6 +33,9 @@ class Reader:
             return None
 
         if self.is_types and not (file_type in self.types):
+            return None
+
+        if file_type in self.forbidden_types:
             return None
         
         return file_type
