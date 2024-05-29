@@ -40,25 +40,31 @@ def local_finder(path: str):
     links_dict: Dict = dict()
     count_dict: Dict = dict()
 
+    count = 0
+
     for file, _, file_path in tqdm(files, desc='Поиск совпадений'):
         try:
-            file = formatter.format(file)
+            # file = formatter.format(file)
             splitted_current_code: List = list(split_class.split(file))
         except ErrorNotTokenize:
             continue
-        
+
         find_links: Dict = search_class.find(splitted_current_code, file_path)
 
         for link in find_links:
             links_dict[link] = links_dict.get(link, 0) + find_links[link]
             count_dict[link] = count_dict.get(link, 0) + 1
+            count += 1
+
+    result_dict: Dict = dict()
 
     for link in links_dict:
-        links_dict[link] /= count_dict[link]
+        if count_dict[link] / count > 0.1:
+            result_dict[link] = links_dict[link] / count_dict[link]
 
     value_to_save = search_class.get_value_to_save()
 
-    return dict(sorted(links_dict.items(), key=lambda item: -item[1])), True, value_to_save
+    return dict(sorted(result_dict.items(), key=lambda item: -item[1])), True, value_to_save
 
 
 def save_results(path: str, source: str, values_to_save: List) -> None:
