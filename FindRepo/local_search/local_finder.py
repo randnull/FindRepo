@@ -35,14 +35,14 @@ def local_finder(path: str):
 
     search_class: LocalSearch = LocalSearch()
 
-    # formatter = FormatterPerHash()
+    formatter = FormatterPerHash()
 
     links_dict: Dict = dict()
     count_dict: Dict = dict()
 
     for file, _, file_path in tqdm(files, desc='Поиск совпадений'):
         try:
-            # file = formatter(file)
+            file = formatter.format(file)
             splitted_current_code: List = list(split_class.split(file))
         except ErrorNotTokenize:
             continue
